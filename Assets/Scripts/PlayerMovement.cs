@@ -5,6 +5,7 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
 
     public float moveSpeed = 5f;
+    public float rotationSpeed = 100f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -20,5 +21,13 @@ public class PlayerMovement : MonoBehaviour
         Vector2 movement = new Vector2(moveX, moveY).normalized;
 
         rb.linearVelocity = movement * moveSpeed;
+        if (Input.GetKey(KeyCode.Q))
+        {
+            transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+        }
+        if (Input.GetKey(KeyCode.E))
+        {
+            transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
+        }
     }
 }
