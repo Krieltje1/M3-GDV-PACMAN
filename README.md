@@ -16,7 +16,7 @@
 ## Wat zijn de triggers - Als je op play drukt
 ### Wanneer verandert het gedrag - Wanneer de enemy (pac-man) een power up pakt waardoor de speler kan eten
 ## Hoe beweegt de vijand - Hij zoekt naar een pad waar jij het verst weg van bent waar de meeste punten liggen
-### Wat gebrurt er als de speler zichtbaar is - dan gaat pac man de veiligste kant op
+### Wat gebeurt er als de speler zichtbaar is - dan gaat pac man de veiligste kant op
 ## Wat gebeurt er als de speler niet zichtbaar is - Dan pakt pac-man de punten op die hij kan oppakken
 ### Wanneer stopt het gedrag - Wanneer de speler pac-man dood maakt OF als pac-man alle punten op eet
 
