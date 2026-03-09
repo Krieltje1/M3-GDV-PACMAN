@@ -5,7 +5,6 @@ public class PlayerMovement : MonoBehaviour
     public Rigidbody2D rb;
 
     public float moveSpeed = 5f;
-    public float rotationSpeed = 100f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -13,21 +12,39 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
+    private Vector2 currentDirection = Vector2.zero;
+
     void Update()
     {
-        float moveX = Input.GetAxisRaw("Horizontal");
-        float moveY = Input.GetAxisRaw("Vertical");
-
-        Vector2 movement = new Vector2(moveX, moveY).normalized;
-
-        rb.linearVelocity = movement * moveSpeed;
-        if (Input.GetKey(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A))
         {
-            transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
+            currentDirection = Vector2.left;
         }
-        if (Input.GetKey(KeyCode.E))
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D))
         {
-            transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
+            currentDirection = Vector2.right;
+        }
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W))
+        {
+            currentDirection = Vector2.up;
+        }
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S))
+        {
+            currentDirection = Vector2.down;
         }
     }
+
+    void FixedUpdate()
+    {
+        rb.linearVelocity = currentDirection * moveSpeed;
+    }
+
+
+    void test()
+    {
+        
+    }
+    
+
+
 }
