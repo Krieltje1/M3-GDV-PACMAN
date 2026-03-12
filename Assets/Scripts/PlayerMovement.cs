@@ -1,19 +1,11 @@
 using UnityEngine;
-using System;
-
 
 public class PlayerMovement : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public GameObject WaypointPrefab;
-    
+
     public float moveSpeed = 5f;
-    
-    public bool spacePressed = false;
-    public bool Movement = true;
-    
-    
-    
+    public float rotationSpeed = 100f;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -21,74 +13,21 @@ public class PlayerMovement : MonoBehaviour
     }
 
     // Update is called once per frame
-    private Vector2 currentDirection = Vector2.zero;
-
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A) && Movement)
+        float moveX = Input.GetAxisRaw("Horizontal");
+        float moveY = Input.GetAxisRaw("Vertical");
+
+        Vector2 movement = new Vector2(moveX, moveY).normalized;
+
+        rb.linearVelocity = movement * moveSpeed;
+        if (Input.GetKey(KeyCode.Q))
         {
-            currentDirection = Vector2.left;
+            transform.Rotate(0, 0, rotationSpeed * Time.deltaTime);
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) && Movement)
+        if (Input.GetKey(KeyCode.E))
         {
-            currentDirection = Vector2.right;
+            transform.Rotate(0, 0, -rotationSpeed * Time.deltaTime);
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) && Movement)
-        {
-            currentDirection = Vector2.up;
-        }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) && Movement)
-        {
-            currentDirection = Vector2.down;
-        }
-        
-        if(Input.GetKeyDown(KeyCode.RightBracket) && Movement)
-        {
-            Movement = false;
-        }
-        else if(Input.GetKeyDown(KeyCode.RightBracket) && !Movement)
-        {
-            Movement = true;
-        }
-        
-        //if(Input.GetKeyDown(KeyCode.Space))   dit is code voor een waypoint te maken
-        //{
-        //    GameObject up = Instantiate(WaypointPrefab);
-       //     up.transform.position = transform.position;
-            
-       // }
-       if(Input.GetKeyDown(KeyCode.Space))
-        {
-            spacePressed = true;
-            StartCoroutine(DisableSpacepressed(0.5f));
-        }
-       
-    
-        
-   
     }
-
-    void FixedUpdate()
-    {
-        rb.linearVelocity = currentDirection * moveSpeed;
-    }
-
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        
-        if(spacePressed && collision.gameObject.CompareTag("Wall"))
-        {
-            Destroy(collision.gameObject);
-        }
-        
-    }
-     System.Collections.IEnumerator DisableSpacepressed(float delay)
-    {
-        yield return new WaitForSeconds(delay);
-        spacePressed = false;
-    }
-
-    
-
-
 }
