@@ -2,22 +2,20 @@ using UnityEngine;
 using System;
 
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovement2 : MonoBehaviour
 {
     public Rigidbody2D rb;
-    public GameObject WaypointPrefab;
-    
-    public float moveSpeed = 5f;
-    
-    public bool spacePressed = false;
+    public GameObject WallPrefab;
+ public GameObject rotatedWall;
+    public BoxCollider2D boxCollider;
     public bool Movement = true;
-    
-    
+
+    public float moveSpeed = 5f;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        boxCollider = GetComponent<BoxCollider2D>();
     }
 
     // Update is called once per frame
@@ -41,31 +39,30 @@ public class PlayerMovement : MonoBehaviour
         {
             currentDirection = Vector2.down;
         }
-        
-        if(Input.GetKeyDown(KeyCode.RightBracket) && Movement)
+        if(Input.GetKeyDown(KeyCode.LeftBracket) && Movement)
         {
             Movement = false;
         }
-        else if(Input.GetKeyDown(KeyCode.RightBracket) && !Movement)
+        else if(Input.GetKeyDown(KeyCode.LeftBracket) && !Movement)
         {
             Movement = true;
         }
         
-        //if(Input.GetKeyDown(KeyCode.Space))   dit is code voor een waypoint te maken
-        //{
-        //    GameObject up = Instantiate(WaypointPrefab);
-       //     up.transform.position = transform.position;
-            
-       // }
-       if(Input.GetKeyDown(KeyCode.Space))
+       if(Input.GetKeyDown(KeyCode.Tab))
         {
-            spacePressed = true;
-            StartCoroutine(DisableSpacepressed(0.5f));
+            GameObject wall = Instantiate(WallPrefab, transform.position, Quaternion.identity);
+            wall.transform.Rotate(0f, 0f, 90f);
+            boxCollider.enabled = false;
+            StartCoroutine(ReEnableCollider(1f)); 
         }
-       
-    
-        
-   
+
+        if(Input.GetKeyDown(KeyCode.Backspace))
+        {
+            GameObject wall = Instantiate(WallPrefab, transform.position, Quaternion.identity);
+            
+            boxCollider.enabled = false;
+            StartCoroutine(ReEnableCollider(1f)); 
+        }
     }
 
     void FixedUpdate()
@@ -73,22 +70,9 @@ public class PlayerMovement : MonoBehaviour
         rb.linearVelocity = currentDirection * moveSpeed;
     }
 
-    void OnCollisionStay2D(Collision2D collision)
-    {
-        
-        if(spacePressed && collision.gameObject.CompareTag("Wall"))
-        {
-            Destroy(collision.gameObject);
-        }
-        
-    }
-     System.Collections.IEnumerator DisableSpacepressed(float delay)
+    System.Collections.IEnumerator ReEnableCollider(float delay)
     {
         yield return new WaitForSeconds(delay);
-        spacePressed = false;
+        boxCollider.enabled = true;
     }
-
-    
-
-
 }
