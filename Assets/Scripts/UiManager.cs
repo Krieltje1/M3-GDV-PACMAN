@@ -6,10 +6,12 @@ public class UiManager : MonoBehaviour
 {
     public Button[] MenuButtons;
     public GameObject Settings;
+    public GameObject Pause;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Settings.SetActive(false);
+        Pause.SetActive(false);
     }
 
     // Update is called once per frame
@@ -53,5 +55,21 @@ public class UiManager : MonoBehaviour
         Settings.SetActive(false);
     }
 
+    //Pause Menu
+    public void OpenPause()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause.SetActive(true);
+        }
+    }
+    
+    public void ClosePause()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            Pause.SetActive(false);
+        }
+    }
 
 }
