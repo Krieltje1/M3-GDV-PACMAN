@@ -66,5 +66,5 @@
     "explorer.fileNesting.patterns": {
         "*.sln": "*.csproj"
     },
-    "dotnet.defaultSolution": "M3-GDV-PACMAN-BOB-CHAN-KJELTVERDONK.sln"
+    "dotnet.defaultSolution": "M3-GDV-PACMAN.sln"
 }
