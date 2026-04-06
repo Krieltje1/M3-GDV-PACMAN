@@ -1,12 +1,15 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Unity.VisualScripting;
 
 public class UiManager : MonoBehaviour
 {
     public Button[] MenuButtons;
     public GameObject Settings;
     public GameObject Pause;
+
+    bool isPaused = false;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -17,8 +20,18 @@ public class UiManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(Input.GetKeyDown(KeyCode.Escape) && isPaused == false)
+        {
+            OpenPause();
+        }
+        else if(Input.GetKeyDown(KeyCode.Escape) && isPaused == true)
+        {
+            ClosePause();
+        }
         
     }
+
+    
 
     //Menu Buttons
     public void OnPlayButtonClicked()
@@ -58,18 +71,24 @@ public class UiManager : MonoBehaviour
     //Pause Menu
     public void OpenPause()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
             Pause.SetActive(true);
-        }
+            Debug.Log("Paused");
+            isPaused = true;
+            Time.timeScale = 0;
     }
     
     public void ClosePause()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
             Pause.SetActive(false);
-        }
+            Debug.Log("Unpaused");
+            isPaused = false;
+            Time.timeScale = 1;
+
+    }
+
+    public void OnQuitToMenuButtonClicked()
+    {
+        SceneManager.LoadScene("Menu");
     }
 
 }
