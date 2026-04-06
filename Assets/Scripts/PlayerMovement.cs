@@ -2,15 +2,16 @@ using UnityEngine;
 using System;
 
 
-public class PlayerMovement : MonoBehaviour
+public class PlayerMovementa : MonoBehaviour
 {
     public Rigidbody2D rb;
     public GameObject WaypointPrefab;
     
+    public bool WallEatCD = true;
     public float moveSpeed = 5f;
     
     public bool spacePressed = false;
-    public bool Movement = true;
+    public bool Movemen = true;
     
     
     
@@ -25,30 +26,30 @@ public class PlayerMovement : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A) && Movement)
+        if (Input.GetKeyDown(KeyCode.LeftArrow) || Input.GetKeyDown(KeyCode.A) && Movemen)
         {
             currentDirection = Vector2.left;
         }
-        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) && Movement)
+        else if (Input.GetKeyDown(KeyCode.RightArrow) || Input.GetKeyDown(KeyCode.D) && Movemen)
         {
             currentDirection = Vector2.right;
         }
-        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) && Movement)
+        else if (Input.GetKeyDown(KeyCode.UpArrow) || Input.GetKeyDown(KeyCode.W) && Movemen)
         {
             currentDirection = Vector2.up;
         }
-        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) && Movement)
+        else if (Input.GetKeyDown(KeyCode.DownArrow) || Input.GetKeyDown(KeyCode.S) && Movemen)
         {
             currentDirection = Vector2.down;
         }
         
-        if(Input.GetKeyDown(KeyCode.RightBracket) && Movement)
+        if(Input.GetKeyDown(KeyCode.RightBracket) && Movemen)
         {
-            Movement = false;
+            Movemen = false;
         }
-        else if(Input.GetKeyDown(KeyCode.RightBracket) && !Movement)
+        else if(Input.GetKeyDown(KeyCode.RightBracket) && !Movemen)
         {
-            Movement = true;
+            Movemen = true;
         }
         
         //if(Input.GetKeyDown(KeyCode.Space))   //dit is code voor waypoint stuff
@@ -57,10 +58,13 @@ public class PlayerMovement : MonoBehaviour
          //   up.transform.position = transform.position;
            // 
        // }
-       if(Input.GetKeyDown(KeyCode.Space))
+       if(Input.GetKeyDown(KeyCode.Space) && WallEatCD)
         {
             spacePressed = true;
             StartCoroutine(DisableSpacepressed(0.5f));
+            WallEatCD = false;
+            StartCoroutine(WalleatCD(2f));
+
         }
        
     
@@ -80,6 +84,13 @@ public class PlayerMovement : MonoBehaviour
         {
             Destroy(collision.gameObject);
         }
+        if(collision.gameObject.CompareTag("sped"))
+        {
+            moveSpeed *= 2f;
+            Destroy(collision.gameObject);
+            StartCoroutine(sped(5f));
+
+        }
         
     }
      System.Collections.IEnumerator DisableSpacepressed(float delay)
@@ -87,6 +98,19 @@ public class PlayerMovement : MonoBehaviour
         yield return new WaitForSeconds(delay);
         spacePressed = false;
     }
+    System.Collections.IEnumerator WalleatCD(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        WallEatCD = true;
+    }
+
+    System.Collections.IEnumerator sped(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        moveSpeed /= 2f;
+    }
+    
+    
 
     
 
