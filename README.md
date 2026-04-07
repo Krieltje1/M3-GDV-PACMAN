@@ -1,3 +1,4 @@
+
 # M3-GDV-PACMAN
 ## Ons Pacman Spelletje
 # https://trello.com/b/o0uLNSxL/m3-gdv
@@ -29,5 +30,6 @@
 # Flowchart:
 <img width="736" height="612" alt="image" src="https://github.com/user-attachments/assets/2bf8096c-885c-475d-b3e5-0acd9f1ab30d" />
 # Gameplay
+
 ![Recording 2026-04-07 105514](https://github.com/user-attachments/assets/8438fcca-3966-4abd-8bc6-6092c2a767c8)
 
